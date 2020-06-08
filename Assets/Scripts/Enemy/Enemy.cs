@@ -1,7 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Enemy : MonoBehaviour
 {
     protected Player Player;
@@ -9,7 +8,7 @@ public class Enemy : MonoBehaviour
 
     protected void Start()
     {
-        Player = GameObject.Find("Player").GetComponent<Player>();
-        WorldPalette = GameObject.Find("WorldPalette").GetComponent<WorldPalette>();
+        Player = FindObjectOfType<Player>();
+        WorldPalette = FindObjectOfType<WorldPalette>();
     }
 }

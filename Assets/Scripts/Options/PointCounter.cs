@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class PointCounter : MonoBehaviour
@@ -10,9 +8,13 @@ public class PointCounter : MonoBehaviour
     [SerializeField] private TMP_Text _textCountPoints;
     [SerializeField] private Animator _textAnimation;
 
-    private void Start()
+    private void OnEnable()
     {
         _player.HitPortal += OnChangePoints;
+    }
+
+    private void Start()
+    {
         OnChangePoints();
     }
 

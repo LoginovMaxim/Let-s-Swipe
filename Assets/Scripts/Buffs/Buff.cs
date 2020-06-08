@@ -1,10 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Buff : MonoBehaviour
 {
     [SerializeField] protected GameObject Particle;
 
-    public abstract void ApplyBuff();
+    public void ApplyBuff()
+    {
+        ActivateBuff();
+
+        Instantiate(Particle, transform.position, Quaternion.identity);
+        Destroy(gameObject);
+    }
+
+    public abstract void ActivateBuff();
 }

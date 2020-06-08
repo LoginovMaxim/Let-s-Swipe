@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 
 public class WorldPalette : MonoBehaviour
 {
@@ -22,17 +19,20 @@ public class WorldPalette : MonoBehaviour
     public Color EnemyColor { get; private set; }
     public Color CubesColor { get; private set; }
 
+
+    private void OnEnable() => _player.ChangedColor += OnChangeSaturation;
+
+    private void OnDisable() => _player.ChangedColor -= OnChangeSaturation;
+
     private void Awake()
     {
         _fixedSaturation = _saturation;
         _fixedValue = _value;
 
         _colorOffset = GradToHSV(_valueColorOffset);
-
         _schemeColor = Random.Range(0, 6);
-        UpdateAllColors();
 
-        _player.ChangedColor += OnChangeSaturation;
+        UpdateAllColors();
     }
 
     public void UpdateAllColors()
@@ -112,10 +112,5 @@ public class WorldPalette : MonoBehaviour
             return 1f - Mathf.Abs(value);
         else
             return value;
-    }
-
-    private void OnDisable()
-    {
-        _player.ChangedColor -= OnChangeSaturation;
     }
 }

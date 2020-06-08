@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class TriangleEnemy : Enemy
@@ -14,15 +12,19 @@ public class TriangleEnemy : Enemy
     private void Start()
     {
         base.Start();
+        Initialize();
 
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+    }
+
+    private void Initialize()
+    {
         transform.localScale = Vector3.one * Random.Range(0.8f, 1.6f);
 
         _offsetPositionToTarget = Vector3.one * Random.Range(-0.8f, 0.8f);
 
         _force *= Random.Range(0.8f, 1.6f);
         _smoothRotation *= Random.Range(0.8f, 1.6f);
-
-        _rigidbody2D = GetComponent<Rigidbody2D>();
 
         GetComponent<SpriteRenderer>().color = WorldPalette.EnemyColor;
     }
@@ -31,7 +33,7 @@ public class TriangleEnemy : Enemy
     {
         LookAtPlayer();
 
-        _rigidbody2D.velocity = _rigidbody2D.velocity * .1f;
+        _rigidbody2D.velocity *= 0.1f;
         _rigidbody2D.AddForce(((Player.transform.position + _offsetPositionToTarget) - transform.position) * _force);
     }
 
@@ -40,9 +42,9 @@ public class TriangleEnemy : Enemy
         Vector3 direction = Player.transform.position - transform.position;
         direction.Normalize();
 
-        float rot_z = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        float rotationZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        Quaternion targetRotation = Quaternion.Euler(0f, 0f, rot_z - 90);
+        Quaternion targetRotation = Quaternion.Euler(0f, 0f, rotationZ - 90f);
 
         if (transform.rotation != targetRotation)
         {

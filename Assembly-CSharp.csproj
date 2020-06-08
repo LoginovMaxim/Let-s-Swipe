@@ -63,10 +63,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Audio\AudioAccompaniment.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Audio\Sound.cs" />
     <Compile Include="Assets\Scripts\Buffs\Buff.cs" />
-    <Compile Include="Assets\Scripts\Buffs\BuffController.cs" />
+    <Compile Include="Assets\Scripts\Buffs\BuffActivator.cs" />
     <Compile Include="Assets\Scripts\Buffs\CoefficientBuff.cs" />
     <Compile Include="Assets\Scripts\Buffs\OpacityBuff.cs" />
     <Compile Include="Assets\Scripts\Buffs\SpeedBuff.cs" />
@@ -86,13 +87,13 @@
     <Compile Include="Assets\Scripts\Portals\LevelPortal.cs" />
     <Compile Include="Assets\Scripts\Portals\MenuPortal.cs" />
     <Compile Include="Assets\Scripts\Portals\Portal.cs" />
-    <Compile Include="Assets\Scripts\Spawner\BuffSpawner.cs" />
-    <Compile Include="Assets\Scripts\Spawner\DeathWallSpawner.cs" />
-    <Compile Include="Assets\Scripts\Spawner\EnemyBlackHoleSpawner.cs" />
-    <Compile Include="Assets\Scripts\Spawner\PortalSpawner.cs" />
-    <Compile Include="Assets\Scripts\Spawner\Spawner.cs" />
-    <Compile Include="Assets\Scripts\Spawner\SquareSpawner.cs" />
-    <Compile Include="Assets\Scripts\Spawner\TriangleSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawners\BuffSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawners\DeathWallSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawners\EnemyBlackHoleSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawners\PortalSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawners\Spawner.cs" />
+    <Compile Include="Assets\Scripts\Spawners\SquareSpawner.cs" />
+    <Compile Include="Assets\Scripts\Spawners\TriangleSpawner.cs" />
     <Compile Include="Assets\Scripts\Visual\Background.cs" />
     <Compile Include="Assets\Scripts\Visual\LookAtPortals.cs" />
     <Compile Include="Assets\Scripts\Visual\WorldPalette.cs" />

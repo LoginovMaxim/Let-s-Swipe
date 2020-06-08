@@ -1,26 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(LineRenderer))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Player _player;
     [SerializeField] private float _force = 100;
-
-    public float NormalForce { get; private set; }
 
     private Vector3 _startPosition;
     private Rigidbody2D _rigidbody;
     private LineRenderer _line;
+    private bool _isPlaying = true;
 
-    private bool _isPlaying;
+    public float NormalForce { get; private set; }
+
+
+    private void OnEnable() => _player.Won += OnWon;
+
+    private void OnDisable() => _player.Won -= OnWon;
 
     private void Start()
     {
-        _isPlaying = true;
-
         NormalForce = _force;
 
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetMouseButton(0))
             {
-                ShowTrails(transform.position, GetForce() * 0.02f);
+                ShowTrails(transform.position, GetForce() * 0.01f);
             }
 
             if (Input.GetMouseButtonUp(0))
@@ -57,9 +57,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetForce(float value) => _force = value;
+    public void ChangeForceByBuff(bool isModify)
+    {
+        if (isModify)
+            _force = NormalForce * 1.5f;
+        else
+            _force = NormalForce;
 
-    public void SetPlayingState(bool value) => _isPlaying = value;
+    }
 
     public void FreezeTime()
     {
@@ -75,6 +80,8 @@ public class PlayerController : MonoBehaviour
 
         return direction * _force;
     }
+
+    private void OnWon() => _isPlaying = false;
 
     private void ShowTrails(Vector3 origin, Vector3 speed)
     {

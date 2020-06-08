@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SquareEnemy : Enemy
 {
@@ -10,9 +8,13 @@ public class SquareEnemy : Enemy
     private void Start()
     {
         base.Start();
+        Initialize();
 
-        Player.HitPortal += OnCheckOldSuqare;
+        Player.HitPortal += OnHitPortal;
+    }
 
+    private void Initialize()
+    {
         transform.localScale = Vector2.one * Random.Range(1f, 2f);
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(0f, 360f)));
         _smoothRotation *= Random.Range(0.8f, 1.6f);
@@ -25,7 +27,7 @@ public class SquareEnemy : Enemy
         transform.Rotate(Vector3.forward * _smoothRotation * Time.deltaTime);
     }
 
-    private void OnCheckOldSuqare()
+    private void OnHitPortal()
     {
         if (Player.transform.position.x - transform.position.x > _deactivatedDistance)
         {
@@ -36,6 +38,6 @@ public class SquareEnemy : Enemy
     private void OnDestroy()
     {
         if (Player != null)
-            Player.HitPortal -= OnCheckOldSuqare;
+            Player.HitPortal -= OnHitPortal;
     }
 }

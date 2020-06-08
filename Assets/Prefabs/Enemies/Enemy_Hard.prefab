@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 318310834710556828}
   - component: {fileID: -911821578720159850}
   m_Layer: 0
-  m_Name: Enemy_Medium
+  m_Name: Enemy_Hard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -138,5 +138,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35fa6a3753d72a24ca49a56e944fa54b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _force: 75
+  _force: 180
   _smoothRotation: 6

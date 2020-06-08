@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Background : MonoBehaviour
 {
@@ -10,15 +8,12 @@ public class Background : MonoBehaviour
     [SerializeField] private SpriteRenderer _downBackground;
     [SerializeField] private float _smoothMove;
 
-    private void OnEnable()
-    {
-        _player.ChangedColor += OnChangeColor;
-    }
 
-    private void Start()
-    {
-        OnChangeColor();
-    }
+    private void OnEnable() => _player.ChangedColor += OnChangeColor;
+
+    private void OnDisable() => _player.ChangedColor -= OnChangeColor;
+
+    private void Start() => OnChangeColor();
 
     private void Update()
     {
@@ -32,8 +27,4 @@ public class Background : MonoBehaviour
         _downBackground.color = _worldPalette.BackgroundDownColor;
     }
 
-    private void OnDisable()
-    {
-        _player.ChangedColor -= OnChangeColor;
-    }
 }

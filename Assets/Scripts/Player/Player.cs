@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(PlayerController))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private WorldPalette _worldPalette;
@@ -14,21 +12,20 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private int _coefficientOfPoints;
     private bool _isOpacity;
+    private bool _canPlayerColorChange = true;
 
     public PlayerController PlayerController { get; private set; }
     public int СountPoints { get; private set; }
 
     public event UnityAction ChangedColor;
     public event UnityAction HitPortal;
+    public event UnityAction TakeBuff;
     public event UnityAction Won;
     public event UnityAction Dead;
 
-    public bool CanPlayerColorChange;
 
     private void Start()
     {
-        CanPlayerColorChange = true;
-
         PlayerController = GetComponent<PlayerController>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteRenderer.color = _worldPalette.PlayerColor;
@@ -42,21 +39,18 @@ public class Player : MonoBehaviour
         if (СountPoints >= _level.WinCountPoints)
         {
             _isOpacity = true;
-            PlayerController.SetPlayingState(false);
-
             Won?.Invoke();
         }
     }
-
-    public void SetCoefficientPoints(int value) => _coefficientOfPoints = value; 
 
     private void ChangeColor()
     {
         ChangedColor?.Invoke();
 
-        if(CanPlayerColorChange)
+        if(_canPlayerColorChange)
             _spriteRenderer.color = _worldPalette.PlayerColor;
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -69,15 +63,12 @@ public class Player : MonoBehaviour
 
             portal.Explosion();
 
-            AudioManager.Instance.SetPitch("PortalExplosion", Random.Range(0.9f, 1.1f));
-            AudioManager.Instance.Play("PortalExplosion");
         }
 
         if (collision.gameObject.TryGetComponent(out Buff buff))
         {
             buff.ApplyBuff();
-            AudioManager.Instance.SetPitch("BuffSound", Random.Range(0.9f, 1.1f));
-            AudioManager.Instance.Play("BuffSound");
+            TakeBuff?.Invoke();
         }
 
         if (_isOpacity == false)
@@ -96,12 +87,39 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.TryGetComponent(out MenuPortal menuPortal))
         {
+            HitPortal?.Invoke();
             PlayerController.FreezeTime();
             menuPortal.Explosion();
-
-            AudioManager.Instance.SetPitch("PortalExplosion", Random.Range(0.9f, 1.1f));
-            AudioManager.Instance.Play("PortalExplosion");
         }
+    }
+
+
+    public void ChangeCoefficientByBuff(bool isModufy)
+    {
+        if (isModufy)
+            _coefficientOfPoints = 150;
+        else
+            _coefficientOfPoints = 0;
+
+    }
+
+    public void ChangeOpacityByBuff(bool isModufy)
+    {
+
+        if (isModufy)
+            SetOpacityParameters(true, false, 0.25f);
+        else
+            SetOpacityParameters(false, true, 1f);
+    }
+
+    private void SetOpacityParameters(bool isOpacity, bool canChangeColor, float alpha)
+    {
+        Color playerColor = _worldPalette.PlayerColor;
+
+        _isOpacity = isOpacity;
+
+        _canPlayerColorChange = canChangeColor;
+        _spriteRenderer.color = new Color(playerColor.r, playerColor.g, playerColor.b, alpha);
     }
 
     public void Die()
@@ -109,5 +127,4 @@ public class Player : MonoBehaviour
         Dead?.Invoke();
     }
 
-    public void SetOpacity(bool value) => _isOpacity = value;
 }

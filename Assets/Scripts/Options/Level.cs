@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Level : MonoBehaviour
 {
@@ -26,15 +24,11 @@ public class Level : MonoBehaviour
 
     private void OnWonLevel()
     {
-        Debug.Log("_isPassed " + _isPassed);
-
         if (_isPassed == false)
         {
             Settings.АvailableLevel++;
             PlayerPrefs.SetInt("АvailableLevel", Settings.АvailableLevel);
         }
-
-        Debug.Log(Settings.АvailableLevel);
 
         _loader.LoadScene(0, true);
     }

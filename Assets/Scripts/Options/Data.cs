@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Data : MonoBehaviour
 {
@@ -15,7 +13,5 @@ public class Data : MonoBehaviour
             Settings.АvailableLevel = 0;
             PlayerPrefs.SetInt("АvailableLevel", Settings.АvailableLevel);
         }
-
-        Debug.Log(Settings.АvailableLevel);
     }
 }

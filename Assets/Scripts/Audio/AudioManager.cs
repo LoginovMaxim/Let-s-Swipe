@@ -1,76 +1,61 @@
-﻿using UnityEngine.Audio;
-using System;
+﻿using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
-    public Sound[] sounds;
-
-    public static AudioManager Instance;
+    [SerializeField] private Sound[] _sounds;
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
-        else
+        foreach (Sound s in _sounds)
         {
-            Destroy(gameObject);
-            return;
+            s.Source = gameObject.AddComponent<AudioSource>();
+            s.Source.clip = s.Clip;
+
+            s.Source.volume = s.Volume;
+            s.Source.pitch = s.Pitch;
+            s.Source.loop = s.Loop;
         }
-
-        foreach (Sound s in sounds)
-        {
-            s.source = gameObject.AddComponent<AudioSource>();
-            s.source.clip = s.clip;
-
-            s.source.volume = s.volume;
-            s.source.pitch = s.pitch;
-            s.source.loop = s.loop;
-        }
-
-        Play($"Theme_{Random.Range(1, 4)}");
     }
 
     public void Play(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(_sounds, sound => sound.Name == name);
         if (s == null)
             return;
-        s.source.Play();
+        s.Source.Play();
     }
 
     public void Stop(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(_sounds, sound => sound.Name == name);
         if (s == null)
             return;
-        s.source.Stop();
+        s.Source.Stop();
     }
 
-    public bool IsPlaying(string name)
+    public bool GetSoundActive(string name)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(_sounds, sound => sound.Name == name);
         if (s == null)
             return false;
         else
-            return s.source.isPlaying;
+            return s.Source.isPlaying;
     }
 
     public void SetPitch(string name, float pitch)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(_sounds, sound => sound.Name == name);
         if (s == null)
             return;
-        s.source.pitch = pitch;
+        s.Source.pitch = pitch;
     }
 
     public void SetVolume(string name, float volume)
     {
-        Sound s = Array.Find(sounds, sound => sound.name == name);
+        Sound s = Array.Find(_sounds, sound => sound.Name == name);
         if (s == null)
             return;
-        s.source.volume = volume;
+        s.Source.volume = volume;
     }
 }

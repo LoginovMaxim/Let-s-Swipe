@@ -1,15 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class SpeedBuff : Buff
 {
-    public override void ApplyBuff()
+    public override void ActivateBuff()
     {
-        transform.parent.GetComponent<BuffController>().ApplySpeedBuff();
-
-        Instantiate(Particle, transform.position, Quaternion.identity);
-
-        Destroy(gameObject);
+        transform.parent.GetComponent<BuffActivator>().ApplySpeedBuff();
     }
 }

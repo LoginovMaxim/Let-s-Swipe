@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BlackHole : MonoBehaviour
 {
@@ -17,15 +15,9 @@ public class BlackHole : MonoBehaviour
 
         Collider2D[] otherColliders;
 
-
         do
         {
             otherColliders = Physics2D.OverlapCircleAll(transform.position, 1f, _layerMask);
-
-            foreach (var other in otherColliders)
-            {
-                Debug.Log(other.name);
-            }
 
             if (otherColliders.Length > 0)
             {

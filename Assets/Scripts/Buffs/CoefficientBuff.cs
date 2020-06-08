@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class CoefficientBuff : Buff
 {
-    public override void ApplyBuff()
+    public override void ActivateBuff()
     {
-        transform.parent.GetComponent<BuffController>().ApplyCoefficientBuff();
+        transform.parent.GetComponent<BuffActivator>().ApplyCoefficientBuff();
 
-        Instantiate(Particle, transform.position, Quaternion.identity);
-
-        Destroy(gameObject);
     }
 }
